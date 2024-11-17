@@ -1,0 +1,10 @@
+services:
+  reflex:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.prod
+    env_file:
+      - ../.env.prod
+    ports:
+      - "3000:3000"  # Frontend
+      - "8000:8000"  # Backend

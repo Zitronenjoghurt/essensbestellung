@@ -1,0 +1,19 @@
+services:
+  reflex:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dev
+    env_file:
+      - ../.env.dev
+    volumes:
+      # Hot reload for development
+      - ..:/src
+      #- reflex_db_dev:/src/reflex.db
+    ports:
+      - "3000:3000"  # Frontend
+      - "8000:8000"  # Backend
+    tty: true
+    stdin_open: true
+
+#volumes:
+#  reflex_db_dev:
