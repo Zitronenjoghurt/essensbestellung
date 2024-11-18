@@ -1,7 +1,7 @@
 # Essensbestellung
 Hier gibt's alle Informationen zum Setup und Arbeiten mit dem Projekt.
 
-README work in progress...
+Work in progress...
 
 ## Voraussetzungen
 - [Python 3.12](https://www.python.org/downloads/release/python-3120/)
@@ -11,6 +11,7 @@ README work in progress...
 ## Basic Setup
 Wie man das Projekt grundlegend zum Laufen bringt.
 
+---
 ### Projekt klonen
 ```shell
 git clone https://github.com/Zitronenjoghurt/essensbestellung.git
@@ -34,3 +35,36 @@ Server stoppen:
 make dev-down oder make clean
 ```
 Weitere make Befehle findet ihr in der [Makefile](Makefile) im root.
+
+---
+### Weitere Schritte
+- Datenbankmigrationen lokal anwenden
+
+Fertig!
+
+---
+### Im Browser aufrufen
+http://localhost:3000
+
+---
+
+# Datenbank
+Reflex handled das Meiste Rund um die Datenbank selbst. Was wir jedoch selbst machen müssen: Migrationen generieren lassen und diese lokal anwenden.
+
+Migrationen sind eine Reihe von Anweisungen, welche beschreiben, wie eine Datenbank verändert werden soll (z.B. Tabelle/Spalten hinzufügen, etc.).
+Das ist vor allem wichtig, wenn sich später Anforderungen ändern und allgemein vereinfacht es den ganzen Datenbank-Aufbauprozess.
+
+## Migrationen anwenden
+Im Projekt-Root einfach folgenden Befehl ausführen:
+```shell
+reflex db migrate
+```
+
+## Eigene Migration erstellen
+Wenn ihr was an den Models/Entitytypen geändert habt, müssen diese Änderungen auch in der DB angewandt werden.
+
+Eine Migration kann man ziemlich simpel selbst erstellen mit folgendem Befehl im Projekt-Root:
+```shell
+reflex db makemigrations --message 'was_ihr_verändert_habt'
+```
+Und am Ende wieder `reflex db migrate`.
