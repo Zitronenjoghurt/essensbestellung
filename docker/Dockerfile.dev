@@ -2,9 +2,12 @@ FROM python:3.12
 
 WORKDIR /src
 
-COPY . .
-
+# Handle requirements before copying the rest
+# That way requirements will only be reinstalled if requirements.txt changed
+COPY requirements.txt .
 RUN pip install -r requirements.txt
+
+COPY . .
 
 EXPOSE 3000 8000
 
