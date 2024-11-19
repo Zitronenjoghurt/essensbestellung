@@ -30,7 +30,7 @@ make dev-up
 ```
 Der läuft im Hintergrund und baut das Projekt bei jeder Änderung automatisch neu.
 
-Server stoppen:
+FYI: Server stoppen:
 ```shell
 make dev-down oder make clean
 ```
@@ -55,7 +55,16 @@ Migrationen sind eine Reihe von Anweisungen, welche beschreiben, wie eine Datenb
 Das ist vor allem wichtig, wenn sich später Anforderungen ändern und allgemein vereinfacht es den ganzen Datenbank-Aufbauprozess.
 
 ## Migrationen anwenden
-Im Projekt-Root einfach folgenden Befehl ausführen:
+Zuerst in den Docker-Container navigieren:
+- Docker Desktop öffnen
+- Sicherstellen, dass der Container läuft (siehe basic setup), so sieht es ungefähr aus:
+  - essensbestellung-dev
+    - db-1
+    - reflex-1
+- Auf 'reflex-1' klicken
+- In den Exec Tab
+
+Und folgenden Befehl ausführen:
 ```shell
 reflex db migrate
 ```
@@ -63,8 +72,13 @@ reflex db migrate
 ## Eigene Migration erstellen
 Wenn ihr was an den Models/Entitytypen geändert habt, müssen diese Änderungen auch in der DB angewandt werden.
 
-Eine Migration kann man ziemlich simpel selbst erstellen mit folgendem Befehl im Projekt-Root:
+Eine Migration kann man ziemlich simpel selbst erstellen mit folgendem Befehl im reflex container:
 ```shell
 reflex db makemigrations --message 'was_ihr_verändert_habt'
 ```
 Und am Ende wieder `reflex db migrate`.
+
+## Datenbank resetten
+Bei Bedarf, einfach in Docker Desktop in den Volumes `essensbestellung-dev_postgres_data_dev` löschen und den Container neu starten, z.B. mit `make dev-restart` im Projekt-Root.
+
+Das Volume ist immer unabhängig vom Container selbst, man kann also den Container komplett löschen und die Daten bleiben erhalten.

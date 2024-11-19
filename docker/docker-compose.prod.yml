@@ -1,3 +1,5 @@
+name: essensbestellung-prod
+
 services:
   reflex:
     build:
@@ -8,3 +10,15 @@ services:
     ports:
       - "3000:3000"  # Frontend
       - "8000:8000"  # Backend
+
+  db:
+    image: postgres:17
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    env_file:
+      - ../.env.prod
+
+volumes:
+  postgres_data_prod:

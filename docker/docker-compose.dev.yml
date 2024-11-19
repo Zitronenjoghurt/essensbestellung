@@ -1,3 +1,5 @@
+name: essensbestellung-dev
+
 services:
   reflex:
     build:
@@ -6,14 +8,23 @@ services:
     env_file:
       - ../.env.dev
     volumes:
-      # Hot reload for development
       - ..:/src
-      #- reflex_db_dev:/src/reflex.db
     ports:
       - "3000:3000"  # Frontend
       - "8000:8000"  # Backend
+    depends_on:
+      - db
     tty: true
     stdin_open: true
 
-#volumes:
-#  reflex_db_dev:
+  db:
+    image: postgres:17
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    env_file:
+      - ../.env.dev
+
+volumes:
+ postgres_data_dev:
