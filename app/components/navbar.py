@@ -1,6 +1,6 @@
 import reflex as rx
 
-from app.constants.route import Route
+from app.constants.routes import Route
 
 STYLE = rx.Style(
     background="whiteAlpha.500"

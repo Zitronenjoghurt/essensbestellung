@@ -82,3 +82,10 @@ Und am Ende wieder `reflex db migrate`.
 Bei Bedarf, einfach in Docker Desktop in den Volumes `essensbestellung-dev_postgres_data_dev` löschen und den Container neu starten, z.B. mit `make dev-restart` im Projekt-Root.
 
 Das Volume ist immer unabhängig vom Container selbst, man kann also den Container komplett löschen und die Daten bleiben erhalten.
+
+# Service-Repository-Entity pattern
+Wichtig für modulares Design und klareres separation of concerns:
+https://medium.com/@ankitpal181/service-repository-pattern-802540254019
+
+Im Prinzip hat man Entities, welche ihre Informationen beschreiben (und eventuell simple Operationen), Repositories die sich allein um das fetchen von Daten kümmern und Services, welche die komplexere Business Logic enthalten.
+Die Entities sollten so wenig Logik wie möglich enthalten, damit man mithilfe der hierarchischen Struktur circular dependencies und Vermischung von Responsibilities so gut es geht vermeidet.
