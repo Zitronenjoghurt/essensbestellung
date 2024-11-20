@@ -3,6 +3,7 @@ import reflex as rx
 from app.components.navbar import navbar
 
 
+@rx.page()
 def example_page() -> rx.Component:
     return rx.container(
         navbar(),

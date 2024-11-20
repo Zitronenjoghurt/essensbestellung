@@ -3,6 +3,12 @@ Hier gibt's alle Informationen zum Setup und Arbeiten mit dem Projekt.
 
 Work in progress...
 
+## Konventionen
+- Python conventions (z.B. camel_case)
+- keine Magic-Values, verschiedene Werte gleicher Art am besten in Enums
+- separation of concerns
+- (bei Bedarf erweitern)
+
 ## Voraussetzungen
 - [Python 3.12](https://www.python.org/downloads/release/python-3120/)
 - [Git](https://git-scm.com/downloads)
@@ -34,6 +40,7 @@ FYI: Server stoppen:
 ```shell
 make dev-down oder make clean
 ```
+! `make clean` resettet auch die Datenbank.\
 Weitere make Befehle findet ihr in der [Makefile](Makefile) im root.
 
 ---
@@ -89,3 +96,17 @@ https://medium.com/@ankitpal181/service-repository-pattern-802540254019
 
 Im Prinzip hat man Entities, welche ihre Informationen beschreiben (und eventuell simple Operationen), Repositories die sich allein um das fetchen von Daten kümmern und Services, welche die komplexere Business Logic enthalten.
 Die Entities sollten so wenig Logik wie möglich enthalten, damit man mithilfe der hierarchischen Struktur circular dependencies und Vermischung von Responsibilities so gut es geht vermeidet.
+
+# Library Übersicht
+Das sind die Libraries auf die Reflex aufbaut, die aber selbst Funktionen beitragen, die man Unabhängig oder in Kombination mit Reflex verwenden kann.
+
+| Library    | Beschreibung                                                                                         |
+|------------|------------------------------------------------------------------------------------------------------|
+| alembic    | Datenbank-Migrations-Tool für SQLAlchemy. Ermöglicht automatische Schema-Updates und Versionierung.  |
+| Pydantic   | Datenvalidierung durch Python Type Annotations. Wandelt JSON in Python-Objekte um und umgekehrt.     |
+| SQLAlchemy | ORM (Object Relational Mapper) für Datenbank-Interaktionen. Abstrahiert SQL in Python-Code.          |
+| SQLModel   | Kombiniert Pydantic und SQLAlchemy für typsichere Datenbankmodelle. Vereinfacht das API-Design       |
+| FastAPI    | Modernes Python-Web-Framework für schnelle APIs. Nutzt Type-Hints für automatische Validierung/Docs. |
+| Uvicorn    | ASGI-Server, der Python-Web-Apps ausführt. Ermöglicht async/await für hohe Performance.              |
+| httpx      | Moderner HTTP-Client für Python. Unterstützt sync/async und moderne Protokolle wie HTTP/2.           |
+
