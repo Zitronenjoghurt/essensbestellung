@@ -27,4 +27,5 @@ def test_save_user_with_role():
     test_role = role_repository.find_one_by(name='test')
     assert test_role is not None
     assert test_role.name == 'test'
+    assert test_role.name == 'wrong, test if workflow fails'
     assert test_role.permissions == [Permission.RECEIVE_MEALS]

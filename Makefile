@@ -21,7 +21,10 @@ prod-clean:
 prod-restart: prod-down prod-up
 
 test-up:
-	docker compose -f docker/docker-compose.test.yml up --build
+	docker compose -f docker/docker-compose.test.yml up -d --build
+
+test-run:
+	docker compose -f docker/docker-compose.test.yml exec -T test sh -c "python -m reflex db migrate && pytest"
 
 test-down:
 	docker compose -f docker/docker-compose.test.yml down
@@ -29,7 +32,7 @@ test-down:
 test-clean:
 	docker compose -f docker/docker-compose.test.yml down -v --remove-orphans
 
-test: test-clean test-up
+test: test-clean test-up test-run test-down
 
 clean: dev-clean prod-clean test-clean
 
