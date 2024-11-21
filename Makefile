@@ -20,7 +20,18 @@ prod-clean:
 
 prod-restart: prod-down prod-up
 
-clean: dev-clean prod-clean
+test-up:
+	docker compose -f docker/docker-compose.test.yml up --build
+
+test-down:
+	docker compose -f docker/docker-compose.test.yml down
+
+test-clean:
+	docker compose -f docker/docker-compose.test.yml down -v --remove-orphans
+
+test: test-clean test-up
+
+clean: dev-clean prod-clean test-clean
 
 logs-dev:
 	docker compose -f docker/docker-compose.dev.yml logs -f

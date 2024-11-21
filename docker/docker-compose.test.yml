@@ -1,0 +1,18 @@
+name: essensbestellung-test
+
+services:
+  test:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.test
+    env_file:
+      - ../.env.dev
+    depends_on:
+      - db
+
+  db:
+    image: postgres:17
+    ports:
+      - "5433:5432"
+    env_file:
+      - ../.env.dev

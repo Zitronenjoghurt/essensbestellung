@@ -1,8 +1,9 @@
 import reflex as rx
+from app.constants.permissions import Permission
 from sqlmodel import Relationship
 from typing import List, TYPE_CHECKING
 from .relationships.user_role import UserRole
-from ..constants.permissions import Permission
+
 
 if TYPE_CHECKING:
     from .role import Role
@@ -25,6 +26,9 @@ class User(rx.Model, table=True):
             "innerjoin": True
         }
     )
+
+    def add_role(self, role: "Role") -> None:
+        self.roles.append(role)
 
     def has_permission(self, permission: Permission) -> bool:
         for role in self.roles:
