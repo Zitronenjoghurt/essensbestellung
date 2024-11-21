@@ -1,3 +1,5 @@
+![Tests](https://github.com/Zitronenjoghurt/essensbestellung/actions/workflows/app-test.yml/badge.svg)
+
 # Essensbestellung
 Hier gibt's alle Informationen zum Setup und Arbeiten mit dem Projekt.
 
