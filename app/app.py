@@ -17,7 +17,7 @@ THEME = rx.theme(
 )
 
 # Builds the app and registers all routes
-app = rx.App(style=BASE_STYLE)
+app = rx.App(style=BASE_STYLE, theme=THEME)
 app.add_page(index_page(), route=Route.ROOT)
 app.add_page(example_page(), route=Route.EXAMPLE)
 
