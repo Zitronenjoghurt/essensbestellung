@@ -3,6 +3,8 @@ name: essensbestellung-dev
 services:
   reflex:
     build:
+      # The files for the reflex container lie in the project root
+      # Which means we have to navigate to the parent directory using ..
       context: ..
       dockerfile: docker/Dockerfile.dev
     env_file:

@@ -1,11 +1,10 @@
 import reflex as rx
+from .relationships.user_role import UserRole
+from app.constants.permissions import Permission
 from sqlalchemy import Column, ARRAY, Enum
-from sqlalchemy.orm import lazyload
 from sqlmodel import Field, Relationship
 from typing import List, TYPE_CHECKING
 
-from app.constants.permissions import Permission
-from .relationships.user_role import UserRole
 
 if TYPE_CHECKING:
     from .user import User

@@ -3,6 +3,8 @@ from app.constants.permissions import Permission
 from app.state import user_repository, role_repository
 
 
+# All tests have to start with 'test_' and need to be placed in the tests directory
+# They can then be run using 'make test' in the project root
 def test_save_user_with_role():
     new_role = Role(name='test', permissions=[Permission.RECEIVE_MEALS])
 

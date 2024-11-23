@@ -1,5 +1,6 @@
 FROM python:3.12
 
+# All following commands will run in the /src directory inside the docker container
 WORKDIR /src
 
 # Handle requirements before copying the rest
@@ -7,8 +8,10 @@ WORKDIR /src
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
+# Copies all files from the project root to /src inside the docker container
 COPY . .
 
 EXPOSE 3000 8000
 
+# Runs reflex in dev mode
 CMD ["python", "-m", "reflex", "run", "--env", "dev"]

@@ -1,10 +1,10 @@
 import reflex as rx
-
 from app.constants.routes import Route
 
-STYLE = rx.Style(
-    background="whiteAlpha.500"
-)
+
+# CSS styles can be passed as a style instance to reflex components
+# https://reflex.dev/docs/styling/common-props/
+STYLE = rx.Style()
 
 def navbar() -> rx.Component:
     return rx.box(
