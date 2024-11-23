@@ -2,9 +2,10 @@
 
 # Essensbestellung
 Hier gibt's alle Informationen zum Setup und Arbeiten mit dem Projekt.\
-**Vor dem Pushen die Informationen zur [Versionierung](#versionierung) durchlesen!**
+Vieles davon sind nützliche Informationen für bestimmte Situationen, aber man muss sich nicht alles durchlesen.
 
-Work in progress...
+
+**Vor dem Pushen aber unbedingt die Informationen zur [Versionierung](#versionierung) durchlesen!**
 
 ## Code Konventionen
 - Python conventions (z.B. snake_case)
