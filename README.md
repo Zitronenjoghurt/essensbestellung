@@ -100,19 +100,6 @@ https://medium.com/@ankitpal181/service-repository-pattern-802540254019
 Im Prinzip hat man Entities, welche ihre Informationen beschreiben (und eventuell simple Operationen), Repositories die sich allein um das fetchen von Daten kümmern und Services, welche die komplexere Business Logic enthalten.
 Die Entities sollten so wenig Logik wie möglich enthalten, damit man mithilfe der hierarchischen Struktur circular dependencies und Vermischung von Responsibilities so gut es geht vermeidet.
 
-# Library Übersicht
-Das sind die Libraries auf die Reflex aufbaut, die aber selbst Funktionen beitragen, die man Unabhängig oder in Kombination mit Reflex verwenden kann.
-
-| Library    | Beschreibung                                                                                         |
-|------------|------------------------------------------------------------------------------------------------------|
-| alembic    | Datenbank-Migrations-Tool für SQLAlchemy. Ermöglicht automatische Schema-Updates und Versionierung.  |
-| Pydantic   | Datenvalidierung durch Python Type Annotations. Wandelt JSON in Python-Objekte um und umgekehrt.     |
-| SQLAlchemy | ORM (Object Relational Mapper) für Datenbank-Interaktionen. Abstrahiert SQL in Python-Code.          |
-| SQLModel   | Kombiniert Pydantic und SQLAlchemy für typsichere Datenbankmodelle. Vereinfacht das API-Design       |
-| FastAPI    | Modernes Python-Web-Framework für schnelle APIs. Nutzt Type-Hints für automatische Validierung/Docs. |
-| Uvicorn    | ASGI-Server, der Python-Web-Apps ausführt. Ermöglicht async/await für hohe Performance.              |
-| httpx      | Moderner HTTP-Client für Python. Unterstützt sync/async und moderne Protokolle wie HTTP/2.           |
-
 # Versionierung
 Der ganze Development Prozess läuft auf dem `develop` Branch ab, der dann bei erreichten Meilensteinen zu `main` gemergt wird. Auf `main` hat man somit immer eine stabile Version des Projekts.
 
@@ -152,3 +139,87 @@ Hier nochmal das wichtigste auf einem Blick.
 - Bei Unsicherheiten beim Konflikt-Lösen nachfragen
 - Branches thematisch/Aufgaben-fokussiert halten
 - Kurze und aussagekräftige Commit-Nachrichten
+
+# Neue Module hinzufügen
+Am einfachsten ist es, wenn man sich im Projekt lokal ein virtual environment (venv) erstellt (manche IDE's machen das automatisch) darin dann das Modul was man hinzufügen will mit pip installiert und dann über pip die requirements.txt aktualisiert.
+
+Die folgenden Befehle alle im Projekt-Root ausführen.
+### Venv erstellen (falls noch keine Vorhanden)
+Je nach Python Version sollte der Python befehl angepasst werden.
+```shell
+python3.12 -m venv .venv
+```
+
+### Venv aktivieren
+```shell
+source .venv/bin/activate
+```
+Danach sollte am Anfang der Befehlszeile immer ein (.venv) in Klammern stehen.
+
+### Aktuelle Module installieren
+Die aktuellen Projekt-Module müssen im Venv erst noch installiert werden.
+```shell
+pip install -r requirements.txt
+```
+
+### Neues modul installieren
+```shell
+pip install neues-modul
+```
+
+### Requirements.txt updaten
+Bitte nicht einfach das Modul manuell in die requirements.txt schreiben, da manchmal noch weitere dependencies mit installiert werden, deswegen einfach:
+```shell
+pip freeze > requirements.txt
+```
+
+### Wichtig
+Wenn ihr verschiedenste Module ausprobiert, stellt sicher das ihr die, die nicht im Projekt verwendet werden auch wieder aus eurem venv entfernt.
+
+Ihr könnt einfach alle Module in eurem venv deinstallieren:
+```shell
+pip freeze | xargs pip uninstall -y
+```
+Und dann mit dem oberen Befehl wieder von der requirements.txt installieren.
+
+# Step-Debugging (optional)
+Ein Nachteil von Docker-Containern ist, dass das Step-Debugging etwas erschwert wird, aber es ist nicht zuuu kompliziert. Mit einer guten IDE ist es sogar relativ simpel (ich weiß zumindest wie man es in PyCharm einstellt).
+
+## Konfiguration in PyCharm
+### Interpreter konfigurieren
+- Unten rechts (da sollte Python 3.12 oder so stehen) draufklicken
+- `add new interpreter` > `on docker compose`
+- Server sollte Docker sein und Docker Desktop muss laufen, eventuell musst du noch auf die 3 Punkte und docker konfigurieren
+- In configuration files zur `docker/docker-compose.dev.yml` navigieren
+- Als service `reflex`
+- Projekt name ist egal
+- Auf Next > Dort erstellt er den Container, wenn fertig wieder auf Next
+- Beim system interpreter sollte schon euer standard python interpreter sein
+- Create
+- Fertig
+
+### Run Konfiguration
+Als nächstes erstellt man in PyCharm eine Run-Konfiguration, welche den vorher konfigurierten Docker Python interpreter verwendet und dadurch dann gleichzeitig alle services, Konfigurationen, etc. automatisch startet UND step debugging ermöglicht.
+- Oben rechts auf `Current File` oder evtl. ein anderer Text mit einem v bzw. Pfeil der nach unten zeigt
+- Dann `edit configurations` > `+`
+
+![Screenshot Run Configuration](https://imgur.com/a/3WAG74E)
+
+### Step Debugging starten
+- IDE schließen, sicherstellen das Docker Desktop läuft und IDE neu starten
+- Es sollte dann den gerade konfigurierten Interpreter updaten, also alle Module aus den requirements.txt installieren, das kann u.U. kurz dauern
+- Danach oben rechts die erstellte run Konfiguration auswählen und über den kleinen grünen Käfer links starten
+- Gesetzte breakpoints sollten jetzt ausgelöst werden
+
+# Library Übersicht
+Das sind die Libraries auf die Reflex aufbaut, die aber selbst Funktionen beitragen, die man Unabhängig oder in Kombination mit Reflex verwenden kann.
+
+| Library    | Beschreibung                                                                                         |
+|------------|------------------------------------------------------------------------------------------------------|
+| alembic    | Datenbank-Migrations-Tool für SQLAlchemy. Ermöglicht automatische Schema-Updates und Versionierung.  |
+| Pydantic   | Datenvalidierung durch Python Type Annotations. Wandelt JSON in Python-Objekte um und umgekehrt.     |
+| SQLAlchemy | ORM (Object Relational Mapper) für Datenbank-Interaktionen. Abstrahiert SQL in Python-Code.          |
+| SQLModel   | Kombiniert Pydantic und SQLAlchemy für typsichere Datenbankmodelle. Vereinfacht das API-Design       |
+| FastAPI    | Modernes Python-Web-Framework für schnelle APIs. Nutzt Type-Hints für automatische Validierung/Docs. |
+| Uvicorn    | ASGI-Server, der Python-Web-Apps ausführt. Ermöglicht async/await für hohe Performance.              |
+| httpx      | Moderner HTTP-Client für Python. Unterstützt sync/async und moderne Protokolle wie HTTP/2.           |
