@@ -203,8 +203,8 @@ Ein Nachteil von Docker-Containern ist, dass das Step-Debugging etwas erschwert 
 Als nächstes erstellt man in PyCharm eine Run-Konfiguration, welche den vorher konfigurierten Docker Python interpreter verwendet und dadurch dann gleichzeitig alle services, Konfigurationen, etc. automatisch startet UND step debugging ermöglicht.
 - Oben rechts auf `Current File` oder evtl. ein anderer Text mit einem v bzw. Pfeil der nach unten zeigt
 - Dann `edit configurations` > `+`
-
-![Screenshot Run Configuration](https://imgur.com/a/3WAG74E)
+- Run configuration wie folgt konfigurieren, wichtig ist den gleichen Interpreter zu verwenden den wir am Anfang konfiguriert haben
+![Screenshot Run Configuration](https://i.imgur.com/LIYrGty.png)
 
 ### Step Debugging starten
 - IDE schließen, sicherstellen das Docker Desktop läuft und IDE neu starten
