@@ -8,3 +8,4 @@ class i18nKey(str, Enum):
     HOME_WELCOME = "home.welcome"
 
     PERMISSION_RECEIVE_MEALS = "permission.receive_meals"
+    PERMISSION_SERVICE_MEALS = "permission.service_meals"
