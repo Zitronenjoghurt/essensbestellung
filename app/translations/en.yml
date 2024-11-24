@@ -1,0 +1,6 @@
+en:
+  home:
+    welcome: "Welcome"
+  permission:
+    receive_meals: "Receive meals"
+    service_meals: "Service meals"
