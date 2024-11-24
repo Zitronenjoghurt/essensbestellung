@@ -5,4 +5,3 @@ from enum import Enum, auto
 class Permission(str, Enum):
     RECEIVE_MEALS = "RECEIVE_MEALS"
     SERVICE_MEALS = "SERVICE_MEALS"
-    EDIT_ORDERS = "EDIT_ORDERS"
