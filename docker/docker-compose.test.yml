@@ -7,6 +7,8 @@ services:
       dockerfile: docker/Dockerfile.test
     env_file:
       - ../.env.dev
+    volumes:
+      - ..:/src
     depends_on:
       - db
 
