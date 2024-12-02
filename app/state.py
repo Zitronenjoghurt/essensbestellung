@@ -22,8 +22,8 @@ class AppState(rx.State):
     _session_user: Optional[User] = None
     is_loading: bool = False
 
-    @property
-    def session_user(self) -> Optional[User]:
-        if not isinstance(self._session_user, User):
-            self._session_user = user_service.get_session_user()
-        return self._session_user
+    @classmethod
+    def get_session_user(cls) -> Optional[User]:
+        if not isinstance(cls._session_user, User):
+            cls._session_user = user_service.get_session_user()
+        return cls._session_user
