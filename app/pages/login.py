@@ -1,12 +1,5 @@
 import reflex as rx
-from rxconfig import config
-from styles.login import (
-    login_page_style, 
-    login_container_style,
-    text_style,
-    input_style,
-    button_style
-)
+from app.styles.login import *
 
 
 def login_page():
