@@ -1,9 +1,19 @@
+# Its alright that this is missing, it will be installed only in the test container
+from pathlib import Path
+
 import pytest
+from reflex.testing import AppHarness
+
 from app import User, Role
 from app.constants.permissions import Permission
 from app.services.password_service import hash_password
 from app.state import role_repository, user_repository
 
+
+@pytest.fixture(scope="session")
+def test_app():
+    with AppHarness.create(root=Path(__file__).parent.parent) as harness:
+        yield harness
 
 @pytest.fixture(scope="session")
 def test_role() -> Role:
@@ -30,5 +40,6 @@ def test_user(test_role: Role, test_user_password: str, test_user_email: str) ->
         password_hash=password_hash,
     )
     user.add_role(test_role)
+
     user_repository.save(user)
     yield user

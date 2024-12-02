@@ -32,8 +32,8 @@ class UserService(BaseEntityService[UserRepository]):
 
     # Returns a new jwt token if the credentials are correct
     # ToDo: Email is subject to change, will depend on what the final login-identifier is
-    # ToDo: Throw different errors depending on what went from
-    def login(self, email: str, password: str) -> Optional[str]:
+    # ToDo: Throw different errors depending on what went wrong
+    def generate_session_token(self, email: str, password: str) -> Optional[str]:
         user = self.repository.find_by_email(email)
         if not isinstance(user, User):
             return None
@@ -42,3 +42,10 @@ class UserService(BaseEntityService[UserRepository]):
             return None
 
         return jwt_encode(user.uuid_string)
+
+    def login(self, email: str, password: str) -> None:
+        token = self.generate_session_token(email, password)
+        if not isinstance(token, str):
+            return None
+
+        StorageState.jwt_token = token
