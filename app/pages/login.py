@@ -20,6 +20,3 @@ def login_page():
             ),
             **login_page_style
         )
-
-app = rx.App()
-app.add_page(login_page, route="/")

@@ -9,7 +9,7 @@ login_container_style = {
     "box_shadow": "md",
     "border_radius": "lg",
     "padding": "2em",
-    "style": {"background": "rgba(255, 255, 255, 0.7)", "width": "300px"}
+    "background": "rgba(255, 255, 255, 0.7)"
 }
 
 # text styles
