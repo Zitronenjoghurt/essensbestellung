@@ -15,6 +15,7 @@ def test_save_user_with_role():
         password_hash='thecakeisalie',
     )
 
+    user_uuid = new_user.uuid
     new_user.add_role(new_role)
     user_repository.save(new_user)
 
@@ -24,6 +25,7 @@ def test_save_user_with_role():
     assert john_doe.last_name == 'Doe'
     assert john_doe.email == 'john.doe@example.com'
     assert john_doe.password_hash == 'thecakeisalie'
+    assert john_doe.uuid == user_uuid
     assert john_doe.has_permission(Permission.RECEIVE_MEALS)
 
     test_role = role_repository.find_one_by(name='test')

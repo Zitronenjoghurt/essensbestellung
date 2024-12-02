@@ -5,3 +5,4 @@ from enum import Enum
 class Route(str, Enum):
     ROOT = "/"
     EXAMPLE = "/example"
+    LOGIN = "/login"

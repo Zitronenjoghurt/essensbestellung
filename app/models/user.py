@@ -1,6 +1,8 @@
 import reflex as rx
+import uuid
 from app.constants.permissions import Permission
-from sqlmodel import Relationship
+from sqlalchemy import Column, UUID
+from sqlmodel import Relationship, Field
 from typing import List, TYPE_CHECKING
 from .relationships.user_role import UserRole
 
@@ -15,6 +17,15 @@ class User(rx.Model, table=True):
     last_name: str
     email: str
     password_hash: str
+    uuid: UUID = Field(
+        sa_column=Column(
+            UUID(as_uuid=True),
+            unique=True,
+            nullable=False,
+            default=uuid.uuid4
+        ),
+        default_factory=uuid.uuid4
+    )
 
     # n:m Relationship between users and roles
     # Back populates the 'users' value in the role entity
@@ -26,6 +37,10 @@ class User(rx.Model, table=True):
             "innerjoin": True
         }
     )
+
+    @property
+    def uuid_string(self) -> str:
+        return str(self.uuid)
 
     def add_role(self, role: "Role") -> None:
         self.roles.append(role)

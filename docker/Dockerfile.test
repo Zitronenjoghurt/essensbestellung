@@ -1,5 +1,11 @@
 FROM python:3.12
 
+# Install requirements that are not available if the reflex app is not running
+RUN apt-get update && apt-get install -y curl unzip nodejs npm && \
+    mkdir -p /root/.local/share/reflex/bun/bin && \
+    curl -fsSL https://bun.sh/install | bash && \
+    cp /root/.bun/bin/bun /root/.local/share/reflex/bun/bin/bun
+
 WORKDIR /src
 
 COPY requirements.txt .
