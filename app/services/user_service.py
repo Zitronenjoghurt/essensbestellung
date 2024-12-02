@@ -5,7 +5,8 @@ from uuid import UUID
 from app import User
 from app.repositories.user_repository import UserRepository
 from app.services.base_entity_service import BaseEntityService
-from app.services.jwt_service import jwt_decode
+from app.services.jwt_service import jwt_decode, jwt_encode
+from app.services.password_service import verify_password
 from app.states.storage import StorageState
 
 
@@ -28,3 +29,16 @@ class UserService(BaseEntityService[UserRepository]):
 
         user = self.repository.find_by_uuid(uuid)
         return user
+
+    # Returns a new jwt token if the credentials are correct
+    # ToDo: Email is subject to change, will depend on what the final login-identifier is
+    # ToDo: Throw different errors depending on what went from
+    def login(self, email: str, password: str) -> Optional[str]:
+        user = self.repository.find_by_email(email)
+        if not isinstance(user, User):
+            return None
+
+        if not verify_password(password, user.password_hash):
+            return None
+
+        return jwt_encode(user.uuid_string)

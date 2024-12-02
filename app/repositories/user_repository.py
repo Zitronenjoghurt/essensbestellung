@@ -12,3 +12,6 @@ class UserRepository(BaseRepository[User]):
 
     def find_by_uuid(self, uuid: UUID) -> Optional[User]:
         return self.find_one_by(uuid=uuid)
+
+    def find_by_email(self, email: str) -> Optional[User]:
+        return self.find_one_by(email=email)
