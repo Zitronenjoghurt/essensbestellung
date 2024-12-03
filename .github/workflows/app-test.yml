@@ -14,8 +14,8 @@ env:
   POSTGRES_USER: admin
   POSTGRES_PASSWORD: root
   POSTGRES_DB: db_dev
-  POSTGRES_HOST: db
-  DATABASE_URL: postgresql://admin:root@db:5432/db_dev
+  POSTGRES_HOST: localhost
+  DATABASE_URL: postgresql://admin:root@localhost:5432/db_dev
   JWT_KEY: example_key
 
 jobs:
