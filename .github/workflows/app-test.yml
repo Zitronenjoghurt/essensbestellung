@@ -9,30 +9,27 @@ on:
 permissions:
   contents: read
 
+env:
+  REFLEX_MODE: test
+  POSTGRES_USER: admin
+  POSTGRES_PASSWORD: root
+  POSTGRES_DB: db_dev
+  POSTGRES_HOST: db
+  DATABASE_URL: postgresql://admin:root@db:5432/db_dev
+  JWT_KEY: example_key
+
 jobs:
   test:
     runs-on: ubuntu-latest
 
     services:
-      postgres:
+      db:
         image: postgres:17
-        env:
-          POSTGRES_PASSWORD: admin
-          POSTGRES_USER: root
-          POSTGRES_DB: db_dev
         ports:
           - 5432:5432
 
     steps:
       - uses: actions/checkout@v4.2.1
-
-      - name: Load env file
-        run: |
-          while IFS= read -r line || [ -n "$line" ]; do
-            if [[ $line =~ ^[^#].*= ]]; then
-              echo "$line" >> $GITHUB_ENV
-            fi
-          done < .env.dev
 
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
@@ -48,14 +45,10 @@ jobs:
           playwright install-deps
 
       - name: Initialize Reflex and run migrations
-        env:
-          REFLEX_MODE: test
         run: |
           python -m reflex init
           python -m reflex db migrate
 
       - name: Run tests
-        env:
-          REFLEX_MODE: test
         run: |
           pytest -v --asyncio-mode=auto
