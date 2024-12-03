@@ -24,7 +24,10 @@ test-up:
 	docker compose -f docker/docker-compose.test.yml up -d --build
 
 test-run:
-	docker compose -f docker/docker-compose.test.yml exec -T test sh -c "python -m reflex db migrate && pytest"
+	docker compose -f docker/docker-compose.test.yml exec -T test sh -c "\
+        python -m reflex init && \
+        python -m reflex db migrate && \
+        pytest -v --asyncio-mode=auto"
 
 test-down:
 	docker compose -f docker/docker-compose.test.yml down

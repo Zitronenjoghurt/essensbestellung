@@ -1,8 +1,8 @@
 """initial_setup
 
-Revision ID: 0ccf6516fb13
+Revision ID: ee84f600e7e0
 Revises: 
-Create Date: 2024-11-20 14:37:26.614624
+Create Date: 2024-12-01 11:47:52.376072
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 import sqlmodel
 
 # revision identifiers, used by Alembic.
-revision: str = '0ccf6516fb13'
+revision: str = 'ee84f600e7e0'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -23,7 +23,7 @@ def upgrade() -> None:
     op.create_table('role',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('permissions', sa.ARRAY(sa.Enum('RECEIVE_MEALS', 'SERVICE_MEALS', 'EDIT_ORDERS', name='permission')), nullable=False),
+    sa.Column('permissions', sa.ARRAY(sa.Enum('RECEIVE_MEALS', 'SERVICE_MEALS', name='permission')), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('user',
@@ -32,7 +32,9 @@ def upgrade() -> None:
     sa.Column('last_name', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('email', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('password_hash', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.Column('uuid', sa.UUID(), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('uuid')
     )
     op.create_table('user_roles',
     sa.Column('user_id', sa.Integer(), nullable=False),

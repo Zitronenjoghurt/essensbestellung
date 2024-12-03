@@ -19,5 +19,11 @@ user_service: UserService = UserService(user_repository)
 # The app state will hold all kinds of information about a user's session
 # E.g. the session user entity from the database and other session-specific data
 class AppState(rx.State):
-    session_user: Optional[User] = None
+    _session_user: Optional[User] = None
     is_loading: bool = False
+
+    @classmethod
+    def get_session_user(cls) -> Optional[User]:
+        if not isinstance(cls._session_user, User):
+            cls._session_user = user_service.get_session_user()
+        return cls._session_user
