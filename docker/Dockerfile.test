@@ -8,8 +8,14 @@ RUN apt-get update && apt-get install -y curl unzip nodejs npm && \
 
 WORKDIR /src
 
+RUN pip install playwright
+
+RUN playwright install
+
+RUN playwright install-deps
+
 COPY requirements.txt .
-RUN pip install -r requirements.txt pytest
+RUN pip install -r requirements.txt
 
 COPY . .
 
