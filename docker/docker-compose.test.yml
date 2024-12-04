@@ -11,8 +11,6 @@ services:
       - REFLEX_MODE=test
     volumes:
       - ..:/src
-      - node_modules:/src/node_modules
-      - bun_install:/root/.bun
     depends_on:
       - db
 
@@ -22,7 +20,3 @@ services:
       - "5433:5432"
     env_file:
       - ../.env.dev
-
-volumes:
-  node_modules:
-  bun_install:
