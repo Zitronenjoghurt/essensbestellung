@@ -1,5 +1,8 @@
 from datetime import timedelta
 
+import pytest
+
+from app.errors.authentication_errors import ExpiredSessionTokenError
 from app.services.jwt_service import jwt_encode, jwt_decode
 
 
@@ -11,8 +14,7 @@ def test_encode_decode():
     assert decoded_identifier == identifier
 
 def test_decode_failed():
-    identifier = "cheesecake"
-    jwt_token = jwt_encode(identifier, expires_delta=timedelta(minutes=-1))
-    decoded_identifier = jwt_decode(jwt_token)
-
-    assert decoded_identifier is None
+    with pytest.raises(ExpiredSessionTokenError):
+        identifier = "cheesecake"
+        jwt_token = jwt_encode(identifier, expires_delta=timedelta(minutes=-1))
+        _ = jwt_decode(jwt_token)

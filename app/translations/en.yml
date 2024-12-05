@@ -1,6 +1,13 @@
 en:
+  general:
+    error: "Error"
   home:
     welcome: "Welcome"
   permission:
     receive_meals: "Receive meals"
     service_meals: "Service meals"
+  error:
+    app: "An unexpected error occurred."
+    authentication: "An authentication error occurred."
+    expired_session_token: "Your session is expired, please log-in again."
+    invalid_session_token: "Your current session is invalid, please log-in again."

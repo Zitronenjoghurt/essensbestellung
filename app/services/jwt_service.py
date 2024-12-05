@@ -1,8 +1,8 @@
-import os
-from datetime import timedelta, datetime
-from typing import Optional
-
 import jwt
+import os
+from app.errors.authentication_errors import ExpiredSessionTokenError, InvalidSessionTokenError
+from datetime import timedelta, datetime
+
 
 JWT_ALGORITHM = 'HS256'
 JWT_EXPIRY_MINUTES = 60 * 24 * 7
@@ -19,15 +19,18 @@ def jwt_encode(identifier: str, expires_delta: timedelta = None) -> str:
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, JWT_KEY, algorithm=JWT_ALGORITHM)
 
-def jwt_decode(jwt_token: str) -> Optional[str]:
-    # ToDo: Throw different errors based on what went wrong instead of returning an Optional string
+def jwt_decode(jwt_token: str) -> str:
     if not isinstance(jwt_token, str):
-        return None
+        raise InvalidSessionTokenError
 
     try:
         payload = jwt.decode(jwt_token, JWT_KEY, algorithms=[JWT_ALGORITHM])
         identifier = payload.get("sub")
+        if identifier is None:
+            raise InvalidSessionTokenError
+    except jwt.ExpiredSignatureError:
+        raise ExpiredSessionTokenError
     except jwt.PyJWTError:
-        return None
+        raise InvalidSessionTokenError
 
     return identifier

@@ -41,7 +41,7 @@ class UserService(BaseEntityService[UserRepository]):
         if not verify_password(password, user.password_hash):
             return None
 
-        return jwt_encode(user.uuid_string)
+        return jwt_encode(user.get_uuid_string())
 
     def login(self, email: str, password: str) -> None:
         token = self.generate_session_token(email, password)

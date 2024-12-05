@@ -26,4 +26,5 @@ def test_login(
     page.get_by_placeholder("Password").fill(test_user_password)
     page.get_by_role("button", name="Login").click()
 
-    expect(page.get_by_text(test_user.first_name)).to_be_visible(timeout=5000)
+    expect(page).to_have_url(_url("/"), timeout=5000)
+    expect(page.get_by_text(test_user_email)).to_be_visible()

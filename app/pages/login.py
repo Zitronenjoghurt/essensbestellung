@@ -1,15 +1,15 @@
 import reflex as rx
 from app import User
+from app.constants.routes import Route
+from app.errors.authentication_errors import InvalidSessionTokenError
 from app.services.password_service import hash_password
 from app.state import user_repository, user_service, AppState
 from app.styles.login import *
-from typing import Optional
 
 
-class DebugLoginState(rx.State):
+class DebugLoginState(AppState):
     username: str
     password: str
-    user: Optional[User]
 
     def create_user(self):
         password_hash = hash_password(self.password)
@@ -23,10 +23,17 @@ class DebugLoginState(rx.State):
 
         user_repository.save(user)
 
+    @rx.event
     def login(self):
         user_service.login(self.username, self.password)
-        self.user = AppState.get_session_user()
+        return rx.redirect(Route.LOGIN)
 
+    @rx.event
+    def check_logged_in(self):
+        if self.is_authenticated():
+            return rx.redirect(Route.ROOT)
+
+@rx.page(route=Route.LOGIN, on_load=DebugLoginState.check_logged_in)
 def login_page():
     return rx.center(
             rx.container(
@@ -52,7 +59,6 @@ def login_page():
                     on_click=DebugLoginState.create_user,
                     **button_style
                 ),
-                rx.text(DebugLoginState.user.first_name, **text_style),
                 **login_container_style
             ),
             **login_page_style
