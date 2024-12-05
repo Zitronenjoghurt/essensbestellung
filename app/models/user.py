@@ -38,9 +38,11 @@ class User(rx.Model, table=True):
         }
     )
 
-    @property
-    def uuid_string(self) -> str:
+    def get_uuid_string(self) -> str:
         return str(self.uuid)
+
+    def get_full_name(self) -> str:
+        return f"{self.first_name} {self.last_name}"
 
     def add_role(self, role: "Role") -> None:
         self.roles.append(role)
