@@ -15,4 +15,5 @@ class i18nKey(str, Enum):
     ERROR_APP = "error.app"
     ERROR_AUTHENTICATION = "error.authentication"
     ERROR_EXPIRED_SESSION_TOKEN = "error.expired_session_token"
+    ERROR_INVALID_CREDENTIALS = "error.invalid_credentials"
     ERROR_INVALID_SESSION_TOKEN = "error.invalid_session_token"

@@ -10,4 +10,5 @@ de:
     app: "Ein unerwarteter Fehler ist aufgetreten."
     authentication: "Es ist ein Fehler bei der Authentifizierung aufgetreten."
     expired_session_token: "Ihre aktuelle Sitzung ist abgelaufen, bitte melden Sie sich erneut an."
+    invalid_credentials: "Nutzername oder Password falsch, bitte versuchen Sie es erneut."
     invalid_session_token: "Ihre aktuelle Sitzung ist fehlerhaft, bitte melden Sie sich erneut an."

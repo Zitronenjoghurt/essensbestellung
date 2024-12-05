@@ -10,4 +10,5 @@ en:
     app: "An unexpected error occurred."
     authentication: "An authentication error occurred."
     expired_session_token: "Your session is expired, please log-in again."
+    invalid_credentials: "Username or password was wrong, please try again."
     invalid_session_token: "Your current session is invalid, please log-in again."

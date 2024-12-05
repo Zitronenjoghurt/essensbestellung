@@ -1,13 +1,12 @@
-from typing import Optional
-
-from uuid import UUID
-
 from app import User
+from app.errors.authentication_errors import InvalidCredentialsError
 from app.repositories.user_repository import UserRepository
 from app.services.base_entity_service import BaseEntityService
 from app.services.jwt_service import jwt_decode, jwt_encode
 from app.services.password_service import verify_password
 from app.states.storage import StorageState
+from typing import Optional
+from uuid import UUID
 
 
 # Will contain business logic specific to the User entity
@@ -32,20 +31,16 @@ class UserService(BaseEntityService[UserRepository]):
 
     # Returns a new jwt token if the credentials are correct
     # ToDo: Email is subject to change, will depend on what the final login-identifier is
-    # ToDo: Throw different errors depending on what went wrong
-    def generate_session_token(self, email: str, password: str) -> Optional[str]:
+    def generate_session_token(self, email: str, password: str) -> str:
         user = self.repository.find_by_email(email)
         if not isinstance(user, User):
-            return None
+            raise InvalidCredentialsError
 
         if not verify_password(password, user.password_hash):
-            return None
+            raise InvalidCredentialsError
 
         return jwt_encode(user.get_uuid_string())
 
     def login(self, email: str, password: str) -> None:
         token = self.generate_session_token(email, password)
-        if not isinstance(token, str):
-            return None
-
         StorageState.jwt_token = token

@@ -10,3 +10,6 @@ class ExpiredSessionTokenError(AuthenticationError):
 
 class InvalidSessionTokenError(AuthenticationError):
     TRANSLATION_KEY = i18nKey.ERROR_INVALID_SESSION_TOKEN
+
+class InvalidCredentialsError(AuthenticationError):
+    TRANSLATION_KEY = i18nKey.ERROR_INVALID_CREDENTIALS
