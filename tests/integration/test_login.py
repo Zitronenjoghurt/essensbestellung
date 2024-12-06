@@ -18,7 +18,7 @@ def test_login(
     def _url(url):
         return re.compile(test_app.frontend_url + url)
 
-    page.goto(test_app.frontend_url + "/login")
+    page.goto(test_app.frontend_url)
     page.set_default_timeout(2500)
     expect(page).to_have_url(_url("/login"))
 
