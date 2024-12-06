@@ -46,13 +46,3 @@ class UserService(BaseEntityService[UserRepository]):
             raise InvalidCredentialsError
 
         return jwt_encode(user.get_uuid_string())
-
-    def login(self, email: str, password: str) -> None:
-        """
-        If the credentials are correct, the user will be logged in by storing a new session token in a cookie.
-        :param email: The users email
-        :param password: The users password
-        """
-
-        token = self.generate_session_token(email, password)
-        StorageState.jwt_token = token

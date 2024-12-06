@@ -7,6 +7,7 @@ from app.repositories.user_repository import UserRepository
 from app.services.role_service import RoleService
 from app.services.user_service import UserService
 from typing import Optional
+from app.states.storage import StorageState
 
 
 # Central access to repositories and class-based services
@@ -33,6 +34,16 @@ class AppState(rx.State):
 
     @rx.event
     def check_auth(self):
-        raise InvalidCredentialsError
         if not self.is_authenticated():
             return rx.redirect(Route.LOGIN)
+        
+    @staticmethod
+    def login(email: str, password: str) -> None:
+        """
+        If the credentials are correct, the user will be logged in by storing a new session token in a cookie.
+        :param email: The users email
+        :param password: The users password
+        """
+
+        token = user_service.generate_session_token(email, password)
+        StorageState.jwt_token = token
