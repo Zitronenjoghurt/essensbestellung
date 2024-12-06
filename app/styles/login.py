@@ -28,5 +28,5 @@ input_style = {
 # button styles
 button_style = {
     "color_scheme": "purple",
-    "margin_top": "1em"
+    "margin": "1em 0.5em 0 0"
 }
