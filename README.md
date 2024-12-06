@@ -17,6 +17,8 @@ Vieles davon sind nützliche Informationen für bestimmte Situationen, aber man 
 - [Python 3.12](https://www.python.org/downloads/release/python-3120/)
 - [Git](https://git-scm.com/downloads)
 - [Docker / Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [Make (eventuell bei MacOS/Linux schon vorinstalliert)](https://leangaurav.medium.com/how-to-setup-install-gnu-make-on-windows-324480f1da69)
+  - Ist theoretisch nicht 100% benötigt, Make wird hier im Projekt eher für Command-Shortcuts verwendet als für das, wofür es hauptsächlich gedacht ist. Zur Not kann man sich die Commands auch aus der Makefile kopieren.
 
 ## Basic Setup
 Wie man das Projekt grundlegend zum Laufen bringt.
