@@ -11,6 +11,7 @@ services:
       - ../.env.dev
     volumes:
       - ..:/src
+      - ../logs:/src/logs
     ports:
       - "3000:3000"  # Frontend
       - "8000:8000"  # Backend
