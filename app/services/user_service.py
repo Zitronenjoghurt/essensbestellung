@@ -9,29 +9,35 @@ from typing import Optional
 from uuid import UUID
 
 
-# Will contain business logic specific to the User entity
-# This Service is class-based because it depends on stateful-operations (via the repositories) and benefits from inheritance
 class UserService(BaseEntityService[UserRepository]):
+    """
+    Contains business logic specific to the User entity.
+    This Service is class-based because it depends on stateful-operations (via the repositories) and benefits from inheritance.
+    """
+
     def get_session_user(self) -> Optional[User]:
+        """
+        :return: The current session user or None, if there is no session token
+        """
+
         token = StorageState.jwt_token
         if not isinstance(token, str):
             return None
 
         uuid_string = jwt_decode(token)
-        if not isinstance(uuid_string, str):
-            return None
-
-        try:
-            uuid = UUID(uuid_string)
-        except ValueError:
-            return None
+        uuid = UUID(uuid_string)
 
         user = self.repository.find_by_uuid(uuid)
         return user
 
-    # Returns a new jwt token if the credentials are correct
-    # ToDo: Email is subject to change, will depend on what the final login-identifier is
     def generate_session_token(self, email: str, password: str) -> str:
+        """
+        Generates a new session token for the given user credentials.
+        :param email: The users email
+        :param password: The users password
+        :return: valid JWT token
+        """
+
         user = self.repository.find_by_email(email)
         if not isinstance(user, User):
             raise InvalidCredentialsError
@@ -42,5 +48,11 @@ class UserService(BaseEntityService[UserRepository]):
         return jwt_encode(user.get_uuid_string())
 
     def login(self, email: str, password: str) -> None:
+        """
+        If the credentials are correct, the user will be logged in by storing a new session token in a cookie.
+        :param email: The users email
+        :param password: The users password
+        """
+
         token = self.generate_session_token(email, password)
         StorageState.jwt_token = token

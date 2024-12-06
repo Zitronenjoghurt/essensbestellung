@@ -1,6 +1,7 @@
 import reflex as rx
 from app import User
 from app.constants.routes import Route
+from app.errors.authentication_errors import InvalidCredentialsError
 from app.repositories.role_repository import RoleRepository
 from app.repositories.user_repository import UserRepository
 from app.services.role_service import RoleService
@@ -32,5 +33,6 @@ class AppState(rx.State):
 
     @rx.event
     def check_auth(self):
+        raise InvalidCredentialsError
         if not self.is_authenticated():
             return rx.redirect(Route.LOGIN)

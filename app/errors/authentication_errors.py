@@ -1,8 +1,8 @@
-from app.errors.app_error import AppError
+from app.errors.app_error import AppUserError
 from app.translations.keys import i18nKey
 
 
-class AuthenticationError(AppError):
+class AuthenticationError(AppUserError):
     TRANSLATION_KEY = i18nKey.ERROR_AUTHENTICATION
 
 class ExpiredSessionTokenError(AuthenticationError):
