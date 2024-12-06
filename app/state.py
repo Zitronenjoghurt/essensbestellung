@@ -33,6 +33,5 @@ class AppState(rx.State):
 
     @rx.event
     def check_auth(self):
-        raise InvalidCredentialsError
         if not self.is_authenticated():
             return rx.redirect(Route.LOGIN)
