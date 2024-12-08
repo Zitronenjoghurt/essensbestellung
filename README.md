@@ -154,10 +154,17 @@ python3.12 -m venv .venv
 ```
 
 ### Venv aktivieren
+MacOS/Linux:
 ```shell
 source .venv/bin/activate
 ```
 Danach sollte am Anfang der Befehlszeile immer ein (.venv) in Klammern stehen.
+
+Windows:
+```shell
+.venv/scripts/activate.bat
+```
+Mit `pip list` kannst du verifizieren, dass du im Environment bist, wenn dort noch keine dependencies installiert sind.
 
 ### Aktuelle Module installieren
 Die aktuellen Projekt-Module müssen im Venv erst noch installiert werden.
