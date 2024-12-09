@@ -25,7 +25,7 @@ class DebugLoginState(AppState):
 
     @rx.event
     def login(self):
-        user_service.login(self.username, self.password)
+        AppState.login(self.username, self.password)
         return rx.redirect(Route.LOGIN)
 
     @rx.event
