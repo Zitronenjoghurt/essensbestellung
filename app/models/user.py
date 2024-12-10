@@ -30,7 +30,7 @@ class User(rx.Model, table=True):
 
     location_id: Optional[int] = Field(foreign_key="location.location_id", nullable=False)
 
-    location: Optional[Location] = Relationship(
+    location: Optional["Location"] = Relationship(
         back_populates="users",
         link_model=LocationUser,
         sa_relationship_kwargs={
