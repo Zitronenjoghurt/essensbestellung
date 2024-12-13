@@ -11,6 +11,7 @@ class DebugLoginState(AppState):
     username: str
     password: str
 
+    @rx.event
     def create_user(self):
         password_hash = hash_password(self.password)
 
@@ -22,6 +23,11 @@ class DebugLoginState(AppState):
         )
 
         user_repository.save(user)
+
+        yield rx.toast(
+            "User created!"
+        )
+
 
     @rx.event
     def login(self):
