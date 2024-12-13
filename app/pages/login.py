@@ -41,7 +41,7 @@ class DebugLoginState(AppState):
 @rx.page(route=Route.LOGIN, on_load=DebugLoginState.check_logged_in)
 def login_page():
     return rx.center(
-            rx.container(
+            rx.card(
                 rx.text("Login", **text_style),
                 rx.input(
                     placeholder="Username",
