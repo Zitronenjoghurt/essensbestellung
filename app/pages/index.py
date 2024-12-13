@@ -1,6 +1,7 @@
 import reflex as rx
 from app.components.navbar import navbar
 from app.constants.routes import Route
+from app.pages.login import DebugLoginState
 from app.state import AppState
 
 
@@ -23,6 +24,11 @@ def index_page() -> rx.Component:
             rx.vstack(
                 rx.heading(f"Welcome {IndexState.full_name}"),
                 rx.text(f"Email: {AppState.session_user.email}"),
+                rx.button(
+                    "Logout",
+                    on_click=AppState.logout,
+                ),
             ),
         )
     )
+

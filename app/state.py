@@ -30,7 +30,7 @@ class AppState(rx.State):
 
     def is_authenticated(self):
         user = self.fetch_session_user()
-        return isinstance(user, User)
+        return isinstance(user, User) and StorageState.jwt_token is not None
 
     @rx.event
     def check_auth(self):
@@ -47,3 +47,10 @@ class AppState(rx.State):
 
         token = user_service.generate_session_token(email, password)
         StorageState.jwt_token = token
+
+    @staticmethod
+    def logout() -> None:
+        StorageState.jwt_token = None
+        AppState.session_user = None
+
+        return rx.redirect(Route.LOGIN)
