@@ -8,14 +8,13 @@ from typing import Optional
 from app.logger import LOGGER
 
 
-def custom_backend_error_handler(exception: Exception) -> Optional[EventSpec]:
+def custom_error_handler(exception: Exception) -> Optional[EventSpec]:
     if isinstance(exception, AppUserError):
         return spawn_error_toast(exception.translate())
     else:
         stringified_exception = stringify_exception(exception)
         LOGGER.error(stringified_exception)
         raise exception
-
 
 def stringify_exception(exception: Exception) -> str:
     tb = traceback.extract_tb(exception.__traceback__)

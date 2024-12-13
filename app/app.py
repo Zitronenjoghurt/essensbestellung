@@ -2,8 +2,7 @@ import reflex as rx
 import os
 from dotenv import load_dotenv
 from .constants.paths import ENV_DEV_PATH
-from .errors.authentication_errors import InvalidCredentialsError
-from .errors.error_handler import custom_backend_error_handler
+from .errors.error_handler import custom_error_handler
 from .logger import LOGGER
 from .styles.base import BASE_STYLE
 
@@ -17,7 +16,8 @@ THEME = rx.theme(
 app = rx.App(
     style=BASE_STYLE,
     theme=THEME,
-    backend_exception_handler=custom_backend_error_handler
+    backend_exception_handler=custom_error_handler,
+    frontend_exception_handler=custom_error_handler
 )
 
 LOGGER.info("App setup complete")
