@@ -1,7 +1,10 @@
 import reflex as rx
+from reflex.event import EventSpec
+
 from app import User
 from app.constants.routes import Route
 from app.errors.authentication_errors import InvalidCredentialsError
+from app.logger import LOGGER
 from app.repositories.role_repository import RoleRepository
 from app.repositories.user_repository import UserRepository
 from app.services.role_service import RoleService
@@ -44,13 +47,12 @@ class AppState(rx.State):
         :param email: The users email
         :param password: The users password
         """
+        LOGGER.debug(f"{email}: {password}")
 
         token = user_service.generate_session_token(email, password)
         StorageState.jwt_token = token
 
-    @staticmethod
-    def logout() -> None:
-        StorageState.jwt_token = None
-        AppState.session_user = None
-
+    def logout(self) -> EventSpec:
+        self.session_user = None
+        StorageState.clear_jwt_token()
         return rx.redirect(Route.LOGIN)

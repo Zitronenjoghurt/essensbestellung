@@ -9,3 +9,8 @@ class StorageState(rx.State):
         secure=True,
         max_age=JWT_EXPIRY_MINUTES * 60
     )
+
+    @staticmethod
+    def clear_jwt_token():
+        StorageState.jwt_token = None
+        return rx.remove_cookie('jwt_token')
