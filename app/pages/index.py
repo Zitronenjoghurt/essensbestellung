@@ -23,6 +23,11 @@ def index_page() -> rx.Component:
             rx.vstack(
                 rx.heading(f"Welcome {IndexState.full_name}"),
                 rx.text(f"Email: {AppState.session_user.email}"),
+                rx.button(
+                    "Logout",
+                    on_click=AppState.logout,
+                ),
             ),
         )
     )
+

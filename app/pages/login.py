@@ -1,9 +1,8 @@
 import reflex as rx
 from app import User
 from app.constants.routes import Route
-from app.errors.authentication_errors import InvalidSessionTokenError
 from app.services.password_service import hash_password
-from app.state import user_repository, user_service, AppState
+from app.state import user_repository, AppState
 from app.styles.login import *
 
 
@@ -11,6 +10,7 @@ class DebugLoginState(AppState):
     username: str
     password: str
 
+    @rx.event
     def create_user(self):
         password_hash = hash_password(self.password)
 
@@ -23,9 +23,14 @@ class DebugLoginState(AppState):
 
         user_repository.save(user)
 
+        yield rx.toast(
+            "User created!"
+        )
+
     @rx.event
-    def login(self):
-        user_service.login(self.username, self.password)
+    def on_login(self):
+        self.login(self.username, self.password)
+        self.reset()
         return rx.redirect(Route.LOGIN)
 
     @rx.event
@@ -36,7 +41,7 @@ class DebugLoginState(AppState):
 @rx.page(route=Route.LOGIN, on_load=DebugLoginState.check_logged_in)
 def login_page():
     return rx.center(
-            rx.container(
+            rx.card(
                 rx.text("Login", **text_style),
                 rx.input(
                     placeholder="Username",
@@ -51,7 +56,7 @@ def login_page():
                 ),
                 rx.button(
                     "Login",
-                    on_click=DebugLoginState.login,
+                    on_click=DebugLoginState.on_login,
                     **button_style
                 ),
                 rx.button(
