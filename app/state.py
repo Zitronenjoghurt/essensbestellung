@@ -47,8 +47,6 @@ class AppState(rx.State):
         :param email: The users email
         :param password: The users password
         """
-        LOGGER.debug(f"{email}: {password}")
-
         token = user_service.generate_session_token(email, password)
         StorageState.jwt_token = token
 
