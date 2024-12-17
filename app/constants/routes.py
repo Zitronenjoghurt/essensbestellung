@@ -6,3 +6,4 @@ class Route(str, Enum):
     ROOT = "/"
     EXAMPLE = "/example"
     LOGIN = "/login"
+    QRCODE = "/qrcode"
