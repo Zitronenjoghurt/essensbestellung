@@ -7,3 +7,4 @@ __pycache__/
 .idea
 .venv
 logs
+.DS_STORE
